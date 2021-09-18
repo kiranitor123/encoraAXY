@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,7 +15,7 @@ export class UserService {
 
   users: any[] =[];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getAllUsers();
    }
 
@@ -25,5 +27,15 @@ export class UserService {
 
   login(email: string, password: string) {
     return this.users.find(user => user.email === email);
+  }
+
+  getUser(){
+    let user = JSON.parse(localStorage.getItem('user')!);
+    return of(user);
+  }
+
+  logOut(){
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

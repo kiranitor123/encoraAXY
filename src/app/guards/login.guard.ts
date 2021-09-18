@@ -12,6 +12,7 @@ export class LoginGuard implements CanActivate {
   canActivate(){
     return new Observable<boolean>((subscriptor) => {
       let user = JSON.parse(localStorage.getItem("user")!);
+      console.log(user);
       if(!user){
         subscriptor.next(true);
       }else{
